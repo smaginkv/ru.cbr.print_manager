@@ -1,13 +1,14 @@
-package ru.planetavto;
+﻿package ru.cbr;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import ru.planetavto.domain.Document;
-import ru.planetavto.service.AverageCount;
-import ru.planetavto.service.DocumentGenerator;
-import ru.planetavto.ui.Console;
-import ru.planetavto.ui.request.UIRequestManager;
+import ru.cbr.core.Document;
+import ru.cbr.core.PrintManager;
+import ru.cbr.service.AverageCount;
+import ru.cbr.service.DocumentGenerator;
+import ru.cbr.ui.Console;
+import ru.cbr.ui.request.UIRequestManager;
 
 public class Context {
 	

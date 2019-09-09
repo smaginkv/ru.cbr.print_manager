@@ -1,4 +1,4 @@
-package ru.planetavto.service;
+﻿package ru.cbr.service;
 
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -6,8 +6,11 @@ public class AverageCount {
 
 	private long totalDuration;
 	private long documentsCount;
-	private ReentrantLock countLock = new ReentrantLock();
+	private ReentrantLock countLock;
 
+	public AverageCount() {
+		countLock = new ReentrantLock();
+	}
 	public void putPrintingDuration(long duration) {
 		countLock.lock();
 		try {

@@ -1,7 +1,7 @@
-package ru.planetavto.domain;
+﻿package ru.cbr.core;
 
+//Hardcoding, in this case, we are sure that the information is not subject to change
 //Ideally, we need to store information about the print duration in DB
-//In this case, we are sure that the information is not subject to change
 public enum DocumentType {
 	INVOICE {
 		public Integer getPrintDuration() {

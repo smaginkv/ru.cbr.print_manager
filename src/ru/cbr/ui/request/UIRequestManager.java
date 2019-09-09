@@ -1,11 +1,11 @@
-package ru.planetavto.ui.request;
+﻿package ru.cbr.ui.request;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import ru.planetavto.PrintManager;
-import ru.planetavto.domain.TypeDocumentSorting;
-import ru.planetavto.ui.Console;
+import ru.cbr.core.PrintManager;
+import ru.cbr.service.sort.DocumentSortingType;
+import ru.cbr.ui.Console;
 
 public class UIRequestManager {
 	private ExecutorService exec;
@@ -19,6 +19,7 @@ public class UIRequestManager {
 	}
 
 	public void cancelDocument(Console console, int documentumber) {
+		//maybe its better to inject console directly in task 
 		execute(new TaskCancelDocument(console, documentumber));
 	}
 
@@ -26,7 +27,7 @@ public class UIRequestManager {
 		execute(new TaskCancelPrinting(console));
 	}
 
-	public void getPrintedDocumentsList(Console console, PrintManager printManager, TypeDocumentSorting typeSorting) {
+	public void getPrintedDocumentsList(Console console, PrintManager printManager, DocumentSortingType typeSorting) {
 		execute(new TaskGetPrintedDocuments(console, typeSorting));
 	}
 

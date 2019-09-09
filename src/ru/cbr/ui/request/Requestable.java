@@ -1,4 +1,4 @@
-package ru.planetavto.ui.request;
+﻿package ru.cbr.ui.request;
 
 public interface Requestable extends Runnable {
 

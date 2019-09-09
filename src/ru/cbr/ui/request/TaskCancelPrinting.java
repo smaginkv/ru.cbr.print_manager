@@ -1,16 +1,17 @@
-package ru.planetavto.ui.request;
+﻿package ru.cbr.ui.request;
 
 import java.util.List;
 
-import ru.planetavto.Context;
-import ru.planetavto.PrintManager;
-import ru.planetavto.domain.Document;
-import ru.planetavto.ui.Console;
+import ru.cbr.Context;
+import ru.cbr.core.Document;
+import ru.cbr.core.PrintManager;
+import ru.cbr.ui.Console;
 
 public class TaskCancelPrinting implements Requestable {
 	private PrintManager printManager;
 	private Console console;
 
+	//access to instantiate - package
 	TaskCancelPrinting(Console console) {
 		this.console      = console;
 		this.printManager = Context.getPrintManager();

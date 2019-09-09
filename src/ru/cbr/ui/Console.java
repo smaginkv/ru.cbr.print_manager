@@ -1,33 +1,43 @@
-package ru.planetavto.ui;
+ï»¿package ru.cbr.ui;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-import ru.planetavto.Context;
-import ru.planetavto.PrintManager;
-import ru.planetavto.domain.Document;
-import ru.planetavto.domain.TypeDocumentSorting;
-import ru.planetavto.ui.request.UIRequestManager;
+import ru.cbr.Context;
+import ru.cbr.core.Document;
+import ru.cbr.core.PrintManager;
+import ru.cbr.service.sort.DocumentSortingType;
+import ru.cbr.ui.request.UIRequestManager;
 
-//maybe use di an context?
 public class Console {
-	private PrintManager printManager = Context.getPrintManager();
-	private UIRequestManager requestManager = Context.getRequestManager();
+	private PrintManager printManager;
+	private UIRequestManager requestManager;
 
+	public Console(){
+		printManager   = Context.getPrintManager();
+		requestManager = Context.getRequestManager();
+	}
+	
 	public void run() {
 		printGreeting();
 
 		Scanner in = new Scanner(System.in);
 		while (true) {
 			System.out.print("Enter operation number: ");
-			int operationNumber = in.nextInt();
+			try {
+				int operationNumber = in.nextInt();
 
-			if (!chooseOperationNumber(operationNumber, in)) {
-				break;
+				if (!chooseOperationNumber(operationNumber, in)) {
+					break;
+				}
+			} catch (InputMismatchException e) {
+				in.next();
+				System.out.println("wrong operation, try again.");				
 			}
 		}
 		in.close();// terminate Treads?
-		System.out.println("Good bay!");
+		System.exit(0);
 	}
 
 	private void printGreeting() {
@@ -55,12 +65,14 @@ public class Console {
 
 		} else if (operationNumber == 5) {
 			displayPrintedDocumentsList(in);
+			
 		} else if (operationNumber == 6) {
 			displayAveragePrintingDuration();
 
 		} else if (operationNumber == 0) {
 			cancelPrintingDocuments();
 			return false;
+			
 		} else {
 			System.out.println("wrong operation, try again.");
 		}
@@ -106,8 +118,8 @@ public class Console {
 
 	private void displayPrintedDocumentsList(Scanner in) {
 		int index = 0;
-		TypeDocumentSorting[] typesSorting = TypeDocumentSorting.values();
-		for (TypeDocumentSorting typeSorting : typesSorting) {
+		DocumentSortingType[] typesSorting = DocumentSortingType.values();
+		for (DocumentSortingType typeSorting : typesSorting) {
 			System.out.printf("%s. by %s\n", ++index, typeSorting);
 		}
 		System.out.print("Enter type of sorting: ");
@@ -118,29 +130,29 @@ public class Console {
 			return;
 		}
 
-		TypeDocumentSorting typeSorting = typesSorting[sortingNumber - 1];
+		DocumentSortingType typeSorting = typesSorting[sortingNumber - 1];
 		requestManager.getPrintedDocumentsList(this, printManager, typeSorting);
 	}
 
 	// asynchronous event
 	public void onCancelAnyDocument(boolean result, int documentNumber) {
 		if (result) {
-			System.out.printf("Ñancel printing of document ¹%s was successful\n", documentNumber);
+			System.out.printf("\nCancel printing of document â„–%s was successful\n", documentNumber);
 		} else {
-			System.out.printf("Document ¹%s printed already\n", documentNumber);
+			System.out.printf("\nDocument â„–%s printed already\n", documentNumber);
 		}
 	}
 
 	public void onCancelPrinting(List<Document> listDocuments) {
 		System.out.println(listDocuments);
-		System.out.println("Printing canceled!");
+		System.out.println("\nPrinting canceled!");
 	}
 	
 	public void onGetSortedDocumentList(List<Document> printedDocuments) {
-		System.out.println(printedDocuments);		
+		System.out.println("\n"+printedDocuments);		
 	}
 	
-	public void onFinishPrinting(String message) {
-		System.out.println(message);
+	public void onFinishPrint(String message) {
+		System.out.println("\n"+message);
 	}
 }

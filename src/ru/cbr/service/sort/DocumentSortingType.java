@@ -1,23 +1,21 @@
-package ru.planetavto.domain;
+﻿package ru.cbr.service.sort;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import ru.planetavto.service.ArrayListToString;
+import ru.cbr.core.Document;
+import ru.cbr.service.ArrayListToString;
 
-public enum TypeDocumentSorting {
+public enum DocumentSortingType {
 	PRINT_ORDER {
 		public List<Document> sort(Queue<Document> printedDocuments) {
-			Document[] array = new Document[0];
-			array = printedDocuments.toArray(array);
-			List<Document> list = new ArrayList<Document>(array.length);
-			Collections.addAll(list, array);
+			List<Document> list = new ArrayListToString<Document>();
+			list.addAll(printedDocuments);
 			return list;
 		}
 	},
@@ -26,7 +24,7 @@ public enum TypeDocumentSorting {
 			return sortImplementation(printedDocuments);
 		}
 
-		@SuppressWarnings({ "unchecked", "hiding" })
+		@SuppressWarnings({ "unchecked" })
 		<DocumentType> DocumentType getSortingAttribute(Document document) {
 			return (DocumentType) document.getDocumentType();
 		}
@@ -46,7 +44,7 @@ public enum TypeDocumentSorting {
 			return sortImplementation(printedDocuments);
 		}
 
-		@SuppressWarnings({ "unchecked", "hiding" })
+		@SuppressWarnings({ "unchecked" })
 		<PaperSize> PaperSize getSortingAttribute(Document document) {
 			return (PaperSize) document.getPaperSize();
 		}
